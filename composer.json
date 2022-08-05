@@ -1,0 +1,36 @@
+{  
+    "name": "bingo-soft/sax",
+    "license": "MIT",
+    "authors": [{
+        "name": "Bingo-Soft",
+        "email": "bingosoft@bk.ru"
+    }],
+    "description": "Simple API for XML ported to PHP",
+    "keywords": ["php", "xml", "sax"],
+    "homepage": "https://github.com/bingo-soft/sax",
+    "type": "project",
+    "config": {
+        "vendor-dir": "./vendor",
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "require": {
+        "php": "^7.4"
+    },
+    "require-dev": {
+        "doctrine/coding-standard": "*",
+        "squizlabs/php_codesniffer": "*",
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sax\\": "./src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { 
+            "Tests\\": "./tests"
+        }
+    }
+}
