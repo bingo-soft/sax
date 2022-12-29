@@ -102,7 +102,7 @@ class Element
         return $defaultValue;
     }
 
-    public function attributeNS($namespace, string $name, string $defaultValue = null): string
+    public function attributeNS($namespace, string $name, string $defaultValue = null): ?string
     {
         $attribute = $this->attribute($this->composeMapKey($namespace, $name));
         if ($attribute === null && ($namespace instanceof XmlNamespace && $namespace->hasAlternativeUri())) {
