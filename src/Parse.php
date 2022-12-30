@@ -15,7 +15,7 @@ class Parse
         $this->parser = $parser;
     }
 
-    public function addError(string $errorMessage, Element $element, $elementIds): void
+    public function addError(string $errorMessage, Element $element, $elementIds = null): void
     {
         $this->errors[] = new ProblemImpl($errorMessage, $element, $elementIds);
     }
