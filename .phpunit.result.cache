@@ -1,1 +1,1 @@
-{"version":1,"defects":{"Tests\\XmlParserTest::testParsing":4,"Tests\\XmlParserTest::testExtension":4},"times":{"Tests\\XmlParserTest::testParsing":0.014,"Tests\\XmlParserTest::testExtension":0.001}}
+{"version":1,"defects":{"Tests\\XmlParserTest::testParsing":4,"Tests\\XmlParserTest::testExtension":4},"times":{"Tests\\XmlParserTest::testParsing":0.01,"Tests\\XmlParserTest::testExtension":0.001}}

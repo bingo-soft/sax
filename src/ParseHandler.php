@@ -26,11 +26,17 @@ class ParseHandler implements DefaultHandlerInterface
         } else {
             $this->elementStack[0]->add($element);
         }
+
         array_unshift($this->elementStack, $element);
     }
 
     public function endElement(string $name): void
     {
         array_shift($this->elementStack);
+    }
+
+    public function characters(string $data): void
+    {
+        $this->elementStack[0]->appendText($data);
     }
 }

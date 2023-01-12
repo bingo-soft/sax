@@ -67,6 +67,10 @@ class SaxParser
             $handler->endElement($name);
         });
 
+        xml_set_character_data_handler($this->getXmlParser(), function ($parser, $data) use ($handler) {
+            $handler->characters($data);
+        });
+
         xml_parse($this->getXmlParser(), $data);
 
         fclose($streamSource);
