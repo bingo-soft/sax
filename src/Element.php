@@ -70,8 +70,11 @@ class Element
         return $elements[0];
     }
 
-    public function elementNS(XmlNamespace $nameSpace, string $tagName): ?Element
+    public function elementNS(string | XmlNamespace $nameSpace, string $tagName): ?Element
     {
+        if (is_string($nameSpace)) {
+            $nameSpace = new XmlNamespace($nameSpace);
+        }
         $elements = $this->elementsNS($nameSpace, $tagName);
         if (count($elements) == 0) {
             return null;
