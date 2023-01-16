@@ -4,7 +4,7 @@ namespace Sax;
 
 class Element
 {
-    protected $prefix;
+    protected $uri;
     protected $tagName;
 
     protected $attributeMap = [];
@@ -13,10 +13,10 @@ class Element
     protected $text = "";
     protected $elements = [];
 
-    public function __construct(?string $prefix, string $localName, string $qName, array $attributes, int $line, int $column)
+    public function __construct(?string $uri, string $localName, string $qName, array $attributes, int $line, int $column)
     {
-        $this->prefix = $prefix;
-        $this->tagName = $prefix === null ? $qName : $localName;
+        $this->uri = $uri;
+        $this->tagName = $uri === null ? $qName : $localName;
         if (!empty($attributes)) {
             foreach ($attributes as $name => $value) {
                 $this->attributeMap[$name] = new Attribute($name, $value);
@@ -168,5 +168,10 @@ class Element
         foreach ($this->elements as $child) {
             $child->collectIds($ids);
         }
+    }
+
+    public function getUri(): ?string
+    {
+        return $this->uri;
     }
 }
