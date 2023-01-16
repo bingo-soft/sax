@@ -13,10 +13,12 @@ class ParseHandler implements DefaultHandlerInterface
         $this->parse = $parse;
     }
 
-    public function startElement(string $name, array $attributes): void
+    public function startElement(?string $uri, string $localName, string $qName, array $attributes): void
     {
         $element = new Element(
-            $name,
+            $uri,
+            $localName,
+            $qName,
             $attributes,
             xml_get_current_line_number($this->parse->getXmlParser()),
             xml_get_current_column_number($this->parse->getXmlParser())
@@ -30,7 +32,7 @@ class ParseHandler implements DefaultHandlerInterface
         array_unshift($this->elementStack, $element);
     }
 
-    public function endElement(string $name): void
+    public function endElement(?string $uri, string $localName, string $qName): void
     {
         array_shift($this->elementStack);
     }

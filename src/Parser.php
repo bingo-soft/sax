@@ -4,7 +4,7 @@ namespace Sax;
 
 class Parser
 {
-    private static $INSTANCE;
+    private static $instance;
 
     private function __construct()
     {
@@ -12,10 +12,10 @@ class Parser
 
     public static function getInstance(): Parser
     {
-        if (self::$INSTANCE === null) {
-            self::$INSTANCE = new Parser();
+        if (self::$instance === null) {
+            self::$instance = new Parser();
         }
-        return self::$INSTANCE;
+        return self::$instance;
     }
 
     public function createParse(): Parse

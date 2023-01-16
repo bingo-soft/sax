@@ -4,6 +4,7 @@ namespace Sax;
 
 class Element
 {
+    protected $prefix;
     protected $tagName;
 
     protected $attributeMap = [];
@@ -12,10 +13,10 @@ class Element
     protected $text = "";
     protected $elements = [];
 
-    public function __construct(string $name, array $attributes, int $line, int $column)
+    public function __construct(?string $prefix, string $localName, string $qName, array $attributes, int $line, int $column)
     {
-        $this->tagName = $name;
-
+        $this->prefix = $prefix;
+        $this->tagName = $prefix === null ? $qName : $localName;
         if (!empty($attributes)) {
             foreach ($attributes as $name => $value) {
                 $this->attributeMap[$name] = new Attribute($name, $value);
@@ -28,19 +29,10 @@ class Element
 
     public function elements(?string $tagName = null): array
     {
-        if ($tagName === null) {
-            return $this->elements;
-        }
-        $selectedElements = [];
-        foreach ($this->elements as $element) {
-            if (strcmp(strtoupper($element->getTagName()), strtoupper($tagName)) == 0) {
-                $selectedElements[] = $element;
-            }
-        }
-        return $selectedElements;
+        return $this->elementsNS(null, $tagName);
     }
 
-    public function elementsNS($nameSpace, string $tagName): array
+    public function elementsNS($nameSpace, ?string $tagName = null): array
     {
         $elementsNS = [];
         if ($nameSpace instanceof XmlNamespace) {
@@ -48,9 +40,13 @@ class Element
             if (empty($elementsNS) && $nameSpace->hasAlternativeUri()) {
                 $elementsNS = $this->elementsNS($nameSpace->getAlternativeUri(), $tagName);
             }
-        } elseif (is_string($nameSpace) || $nameSpace === null) {
-            foreach ($this->elements($tagName) as $element) {
-                if ($nameSpace === null || $nameSpace == $element->getUri()) {
+        } elseif ($nameSpace === null || is_string($nameSpace)) {
+            foreach ($this->elements as $element) {
+                if ($tagName !== null && strtoupper($tagName) == strtoupper($element->getTagName())) {
+                    if ($nameSpace === null || $nameSpace == $element->getUri()) {
+                        $elementsNS[] = $element;
+                    }
+                } elseif ($tagName === null) {
                     $elementsNS[] = $element;
                 }
             }

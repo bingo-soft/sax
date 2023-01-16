@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions
-  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:extension="http://test.org/schema/1.0/bpmn"
-  targetNamespace="http://test.org/test">
-  <message id="message"/>
-  <error id="error"/>
-  <itemDefinition id="itemDef"/>
-  <signal id="signal" name="signal" structureRef="itemDef"/>
-  <escalation id="escalation" name="escalation" escalationCode="1337" structureRef="itemDef"/>
-  <process id="process">
+<bpmn2:definitions
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:extension="http://activiti.org/bpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_P0ATkATBEeOwt8aOrDOPHA" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:message id="message"/>
+  <bpmn2:error id="error"/>
+  <bpmn2:itemDefinition id="itemDef"/>
+  <bpmn2:signal id="signal" name="signal" structureRef="itemDef"/>
+  <bpmn2:escalation id="escalation" name="escalation" escalationCode="1337" structureRef="itemDef"/>
+  <bpmn2:process id="process">
     <intermediateThrowEvent id="event">
       <cancelEventDefinition/>
       <compensateEventDefinition waitForCompletion="true" activityRef="task"/>
@@ -35,5 +33,5 @@
       </timerEventDefinition>
     </intermediateThrowEvent>
     <userTask id="task"/>
-  </process>
+  </bpmn2:process>
 </definitions>
