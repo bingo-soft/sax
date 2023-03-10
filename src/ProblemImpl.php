@@ -10,7 +10,7 @@ class ProblemImpl implements ProblemInterface
     protected $mainElementId;
     protected $elementIds = [];
 
-    public function __construct($e, Element $element = null, $elementIds = null)
+    public function __construct($e, Element $element = null, ...$elementIds)
     {
         if ($e instanceof \Exception) {
             $this->concatenateErrorMessages($e);
@@ -20,15 +20,11 @@ class ProblemImpl implements ProblemInterface
         if ($element !== null) {
             $this->extractElementDetails($element);
         }
-        if (is_string($elementIds)) {
-            $this->mainElementId = $elementIds;
-        } elseif (is_array($elementIds) && !empty($elementIds)) {
-            $this->mainElementId = $elementIds[0];
+        if (!empty($elementIds)) {
+            $this->mainElementId = array_shift($elementIds);
             foreach ($elementIds as $elementId) {
-                if (!empty($elementId)) {
-                    if (!in_array($elementId, $this->elementIds)) {
-                        $this->elementIds[] = $elementId;
-                    }
+                if ($elementId !== null && !in_array($elementId, $this->elementIds)) {
+                    $this->elementIds[] = $elementId;
                 }
             }
         }

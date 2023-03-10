@@ -9,15 +9,31 @@ class Parse
     protected $streamSource;
     protected $rootElement = null;
     protected $errors = [];
+    protected $warnings = [];
 
     public function __construct(Parser $parser)
     {
         $this->parser = $parser;
     }
 
-    public function addError(string $errorMessage, Element $element = null, $elementIds = null): void
+    public function addError(string $errorMessage, Element $element = null, ...$elementIds): void
     {
         $this->errors[] = new ProblemImpl($errorMessage, $element, $elementIds);
+    }
+
+    public function addWarning(string $errorMessage, Element $element = null, ...$elementIds): void
+    {
+        $this->errors[] = new ProblemImpl($errorMessage, $element, $elementIds);
+    }
+
+    public function hasErrors(): bool
+    {
+        return !empty($this->errors);
+    }
+
+    public function hasWarnings(): bool
+    {
+        return !empty($this->errors);
     }
 
     public function getParser(): Parser
