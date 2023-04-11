@@ -84,4 +84,14 @@ class Parse
         $this->parser->parse($this->streamSource, new ParseHandler($this));
         return $this;
     }
+
+    public function throwExceptionForErrors(): void
+    {
+        if (!empty($this->errors)) {
+            $message = implode("\n", array_map(function ($error) {
+                return $error->getMessage() . " | resource " . $this->name;
+            }, $this->errors));
+            throw new \Exception($message);
+        }
+    }
 }
