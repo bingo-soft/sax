@@ -23,7 +23,7 @@ class Parse
 
     public function addWarning(string $errorMessage, Element $element = null, ...$elementIds): void
     {
-        $this->errors[] = new ProblemImpl($errorMessage, $element, $elementIds);
+        $this->warnings[] = new ProblemImpl($errorMessage, $element, $elementIds);
     }
 
     public function hasErrors(): bool
@@ -33,7 +33,7 @@ class Parse
 
     public function hasWarnings(): bool
     {
-        return !empty($this->errors);
+        return !empty($this->warnings);
     }
 
     public function getParser(): Parser
@@ -83,6 +83,16 @@ class Parse
     {
         $this->parser->parse($this->streamSource, new ParseHandler($this));
         return $this;
+    }
+
+    public function logWarnings(): void
+    {
+        if (!empty($this->warnings)) {
+            $message = implode("\n", array_map(function ($warning) {
+                return $warning->getMessage() . " | resource " . $this->name;
+            }, $this->warnings));
+            fwrite(STDERR, $message . "\n");
+        }
     }
 
     public function throwExceptionForErrors(): void
